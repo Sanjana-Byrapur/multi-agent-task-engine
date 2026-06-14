@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Task Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+
+    <div class="max-w-6xl mx-auto p-6">
+        <header class="mb-8 flex justify-between items-center border-b pb-4">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-800">Operational Dashboard</h1>
+                <p class="text-sm text-gray-500 mt-1">Real-time status tracking for multi-agent allocations</p>
+            </div>
+            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">Agent Engine Online</span>
+        </header>
+
+        <div class="bg-white shadow rounded-lg overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 bg-gray-100 flex justify-between items-center">
+                <h2 class="font-semibold text-gray-700">System Tasks</h2>
+            </div>
+            
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Task Details</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignee</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for task in tasks %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">#{{ task.id }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ task.title }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ task.assignee }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            {% if task.priority == 'high' %}
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">High</span>
+                            {% elif task.priority == 'medium' %}
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Medium</span>
+                            {% else %}
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Low</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ task.due_date or 'None' }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            {% if task.status == 'completed' %}
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Completed</span>
+                            {% else %}
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">Pending</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% if not tasks %}
+                    <tr>
+                        <td colspan="6" class="px-6 py-10 text-center text-sm text-gray-400">No tasks tracked in the system yet. Feed operations via the Chatbot interface!</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
