@@ -1,3 +1,5 @@
 .env
 __pycache__/
 tasks.db
+service-account.json
+known_spaces.json
