@@ -2,6 +2,7 @@ import os
 import json
 from dotenv import load_dotenv
 from typing import TypedDict, Annotated, List
+from datetime import datetime
 
 load_dotenv()
 
@@ -123,6 +124,8 @@ def router_node(state: AgentState):
 def action_agent_node(state: AgentState):
     """Executes state changes on the data layer with 100% certainty."""
     user_msg = state["messages"][-1].content
+
+    today_date = datetime.now().strftime("%Y-%m-%d")
 
     system_prompt = """
     You are a strict data extraction tool. You do not converse.
